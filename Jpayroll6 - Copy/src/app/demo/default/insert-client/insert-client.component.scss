@@ -1,0 +1,36 @@
+/* Custom styles for radio buttons */
+.custom-radio .form-check-input {
+    border: 2px solid #333; /* Darker border for visibility */
+    border-radius: 50%; /* Makes it circular */
+    width: 18px;
+    height: 18px;
+  }
+  
+  .custom-radio .form-check-input:checked {
+    background-color: #007bff; /* Changes color when checked */
+    border-color: #007bff;
+  }
+  
+  /* Custom styles for checkboxes */
+  .custom-checkbox .form-check-input {
+    border: 2px solid #333; /* Darker border for visibility */
+    width: 18px;
+    height: 18px;
+  }
+  
+  .custom-checkbox .form-check-input:checked {
+    background-color: #007bff; /* Changes color when checked */
+    border-color: #007bff;
+  }
+  
+  .form-control[readonly] {
+    background-color: #ffffff; /* Light grey background for distinction */
+  
+  }
+  .my-custom-dropdown .ngx-dropdown-list {
+    max-height: 150px; /* Set the maximum height */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    border: 1px solid #ddd; /* Optional: Add a border */
+    background-color: #fff; /* Optional: Ensure background color is set */
+  }
+  

@@ -1,0 +1,102 @@
+<div class="p-5">
+  <div class="mb-5 text-left">
+    <h1 class="text-l font-bold text-gray-800">Client Status</h1>
+  </div>
+  <!-- Search Bar Button Add -->
+  <div class="mb-3 d-flex justify-content-between">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Search..." 
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+    />
+    
+    <a *ngIf="currentUserType == true" (click)="onAdd()">
+      <button class="btn btn-primary ms-2">Add</button>
+    </a>  
+  </div>
+
+  <!-- Data Table -->
+  <ngx-datatable
+  class="material rounded-lg border border-gray-300"
+  [rows]="paginatedRows"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [rowHeight]="'auto'"
+  [limit]="pageSize"
+  [count]="filteredRows.length"
+  [offset]="page.offset"
+  (page)="onPage($event)"
+>
+  <ngx-datatable-column name="Company" prop="ClientName">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div (contextmenu)="onContextMenu($event, row)">
+        {{ row.ClientName }}
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Cloud" prop="CloudName">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div (contextmenu)="onContextMenu($event, row)">
+        {{ row.CloudName }}
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Cloud Type" prop="OnPremise">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div (contextmenu)="onContextMenu($event, row)">
+        {{ row.OnPremise }}
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Status" prop="HybridStatus">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div (contextmenu)="onContextMenu($event, row)">
+        {{ row.HybridStatus }}
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+<!-- Context Menu -->
+<div 
+  *ngIf="contextMenuVisible" 
+  [ngStyle]="{ top: contextMenuPosition.y + 'px', left: contextMenuPosition.x + 'px' }" 
+  class="context-menu bg-white shadow-lg rounded-lg p-2 absolute z-10"
+>
+  <ul class="list-none p-0 m-0">
+    <li (click)="openClientChangeOrder(selectedRow.ClientId)">Change Order</li>
+    <li (click)="openClientDetail(selectedRow.ClientId)">Open Client</li>
+  </ul>
+</div>
+
+
+  <!-- Custom Pagination Controls -->
+  <div class="d-flex justify-content-between mt-3">
+    <div class="mb-2">
+      <p class="text-sm text-black">Showing</p>
+      <select class="border border-gray-300 rounded-lg p-1" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+      <p class="text-sm text-black mt-3">of {{ filteredRows.length }} records</p>
+    </div>
+    <div>
+      <button
+        (click)="onPreviousPage()"
+        class="btn btn-secondary me-3"
+        [disabled]="page.offset === 0">
+        Previous
+      </button>
+      <button
+        (click)="onNextPage()"
+        class="btn btn-primary"
+        [disabled]="isLastPage()">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

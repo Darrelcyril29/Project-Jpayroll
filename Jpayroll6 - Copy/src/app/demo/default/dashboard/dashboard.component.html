@@ -1,0 +1,135 @@
+<div class="row">
+  @for (analytic of Progress; track analytic) {
+    <div class="col-md-6 col-xl-4">
+      <app-card [showHeader]="false" blockClass="dashboard-card">
+        <h6 class="mb-2 f-w-400 text-muted">{{ analytic.title }}</h6>
+        <h4 class="mb-3">
+          {{ analytic.amount }}
+        </h4>
+      </app-card>
+    </div>
+  }
+  <!-- <div class="col-md-12 col-xl-8">
+    <app-monthly-bar-chart />
+  </div>
+  <div class="col-md-12 col-xl-4">
+    <app-income-overview-chart />
+  </div> -->
+
+  <div class="col-md-12 col-xl-8">
+    <h5 class="mb-3">Recent Orders</h5>
+    <div class="mb-3 d-flex justify-content-between">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Search..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+      />  
+    </div>
+    <div class="card tbl-card">
+      <ngx-datatable
+        class="material rounded-lg border border-gray-300"
+        [rows]="paginatedRows"
+        [columns]="columns"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="pageSize"
+        [count]="filteredRows.length"
+        [offset]="page.offset"
+        (page)='onPage($event)'
+        >
+        
+          <!-- Other column-->
+          <ngx-datatable-column name="Change Order" prop="ChangeOrder">
+            <ng-template let-value="value"  ngx-datatable-cell-template let-row="row">
+              <div (contextmenu)="onContextMenu($event, row)"
+              [ngClass]="getStatusClass(value)">
+                {{ row.ChangeOrder }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Company Name" prop="ClientName">
+            <ng-template let-value="value"  ngx-datatable-cell-template let-row="row">
+              <div (contextmenu)="onContextMenu($event, row)"
+              [ngClass]="getStatusClass(value)">
+                {{ row.ClientName }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Status" prop="StatusProgress" [cellClass]="getStatusClass">
+            <ng-template let-value="value"  ngx-datatable-cell-template let-row="row">
+              <div (contextmenu)="onContextMenu($event, row)"
+              [ngClass]="getStatusClass(value)">
+                {{ row.StatusProgress }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          
+          
+      </ngx-datatable>
+    
+      <div 
+      *ngIf="contextMenuVisible" 
+      [ngStyle]="{ top: contextMenuPosition.y + 'px', left: contextMenuPosition.x + 'px' }" 
+      class="context-menu bg-white shadow-lg rounded-lg p-2 absolute z-10"
+      >
+        <ul class="list-none p-0 m-0">
+          <li class="cursor-pointer p-2 hover:bg-gray-200" (click)="openChangeDetail(selectedRow.ChangeOrder)">Open</li>
+          <li class="cursor-pointer p-2 hover:bg-gray-200" *ngIf="currentUserType == true" (click)="onChangeLogClick(selectedRow.ChangeOrder, selectedRow.ClientName)">Change Log</li>
+        </ul>
+      </div>
+
+      <!-- Custom Pagination Controls -->
+      <div class="d-flex justify-content-between mt-3 p-3">
+        <div class="mb-2">
+          <p class="text-sm text-black">Showing</p>
+          <select class="border border-gray-300 rounded-lg p-1" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)">
+            <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+          </select>
+          <p class="text-sm text-black mt-3">of {{ filteredRows.length }} records</p>
+        </div>
+        <div>
+          <button
+            (click)="onPreviousPage()"
+            class="btn btn-secondary me-3"
+            [disabled]="page.offset === 0">
+            Previous
+          </button>
+        
+          <button
+            (click)="onNextPage()"
+            class="btn btn-primary"
+            [disabled]="isLastPage()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 col-xl-4">
+    <h5 class="mb-3">Change Order History</h5>
+    <div class="card">
+      <div class="list-group list-group-flush">
+        @for (history of transaction; track history) {
+          <a href="javascript:" class="list-group-item list-group-item-action px-3">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h6 class="mb-1">Change Order: {{ history.ChangeOrder }}</h6>
+                <p class="mb-0 text-muted">{{ history.ChangeDate | date: 'dd MMMM yyyy HH.mm'}}</p>
+              </div>
+              <div class="flex-shrink-0 text-end">
+                <h6 class="mb-1">Action: {{ history.Altered }}</h6>
+                <p class="mb-0 text-muted">User: {{ history.UserName }}</p>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</div>

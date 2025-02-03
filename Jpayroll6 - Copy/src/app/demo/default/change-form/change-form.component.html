@@ -1,0 +1,199 @@
+<div class="container my-5">
+  <h1 class="text-center mb-4">Change Request Form</h1>
+  
+  <form [formGroup]="changeRequestForm" (ngSubmit)="onSubmit()">
+    <!-- Company Details Fieldset -->
+    <fieldset class="border p-4 mb-4">
+      <legend class="w-auto px-2">Company Details</legend>
+      
+      <div class="mb-3 row">
+        <label for="clientName" class="col-sm-3 col-form-label">Company Name</label>
+        <div class="col-sm-9">
+          <ngx-select-dropdown
+          [options]="clients"
+          formControlName="clientName"
+          [config]="selectConfig"
+          (change)="onCompanyChange($event)"
+          [multiple]="false"
+        ></ngx-select-dropdown>
+          <div *ngIf="changeRequestForm.get('clientId')?.invalid && changeRequestForm.get('clientId')?.touched" class="text-danger small">
+            Please select a company
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-3 row">
+        <label for="customeraddress" class="col-sm-3 col-form-label">Customer Address</label>
+        <div class="col-sm-9">
+          <input
+            id="customeraddress"
+            formControlName="customeraddress"
+            class="form-control"
+            [attr.readonly]="true"
+          />
+        </div>
+      </div>
+    </fieldset>
+  
+      <!-- Change Order-->
+      <div class="row mb-3">
+          <div class="col-sm-6">
+              <label for="changeOrder" class="form-label">Change Order</label>
+              <input id="changeOrder" formControlName="changeOrder" class="form-control" />
+              <div *ngIf="changeRequestForm.get('changeOrder')?.invalid && changeRequestForm.get('changeOrder')?.touched" class="text-danger small">
+                  Please provide change order
+              </div>
+          </div>
+
+          
+      <!-- Reference Number  -->
+          <div class="col-sm-6">
+              <label for="refNo" class="form-label">Reference Number</label>
+              <input id="refNo" formControlName="refNo" class="form-control" />
+              <div *ngIf="changeRequestForm.get('refNo')?.invalid && changeRequestForm.get('refNo')?.touched" class="text-danger small">
+                  Please provide reference number
+              </div>
+          </div>
+      </div>
+  
+      <!-- Change Type -->
+      <div class="mb-3">
+          <label for="changeType" class="form-label">Change Type</label>
+          <select id="changeType" formControlName="changeType" class="form-select">
+          <option *ngFor="let option of changeTypeOptions" [value]="option">{{ option }}</option>
+          </select>
+          <div *ngIf="changeRequestForm.get('changeType')?.invalid && changeRequestForm.get('changeType')?.touched" class="text-danger small">
+            Please Select a Change Type
+        </div>
+      </div>
+
+      <!-- Other Change Type Details -->
+      <div *ngIf="changeRequestForm.get('changeType')?.value === 'Other'" class="mb-3">
+          <label for="otherChangeDetails" class="form-label">Please Specify</label>
+          <textarea
+          id="otherChangeDetails"
+          formControlName="otherChangeDetails"
+          rows="3"
+          class="form-control"
+          ></textarea>
+          <div *ngIf="changeRequestForm.get('otherChangeDetails')?.invalid && changeRequestForm.get('otherChangeDetails')?.touched" class="text-danger small">
+              Please provide details for the "Other" change type.
+          </div>
+      </div>
+  
+      <!-- Change Details -->
+      <div class="mb-3">
+          <label for="changeDetails" class="form-label">Change Details</label>
+          <div class="ckeditor-wrapper">
+            <ckeditor
+              [editor]="Editor"
+              formControlName="changeDetails"
+              [config]="config"
+            ></ckeditor>
+          </div>  
+          <div *ngIf="changeRequestForm.get('changeDetails')?.invalid && changeRequestForm.get('changeDetails')?.touched" class="text-danger small">
+            Please provide change details
+          </div>
+      </div>
+
+      <!-- Priority and Attachment -->
+      <div class="row mb-3">
+          <div class="col-sm-6">
+            <label class="form-label me-3">Priority</label>
+            <div *ngFor="let priority of priorities" class="form-check form-check-inline custom-radio">
+              <input
+                type="radio"
+                [value]="priority.value"
+                formControlName="priority"
+                class="form-check-input"
+              />
+              <label class="form-check-label">{{ priority.label }}</label>
+            </div>
+            <div *ngIf="changeRequestForm.get('priority')?.invalid && changeRequestForm.get('priority')?.touched" class="text-danger small">
+              Please select a priority
+            </div>
+          </div>
+        
+            
+      
+          <div class="col-sm-6">
+              <div class="form-check custom-checkbox">
+                  <input type="checkbox" formControlName="Attachment" class="form-check-input" />
+                  <label class="form-check-label" for="Attachment">Attachment</label>
+              </div>
+          </div>
+      </div>
+
+
+      <!-- Mandays -->
+      <div class="row mb-3">
+          <div class="col-sm-6">
+              <label for="mandays" class="form-label">Mandays</label>
+              <input id="mandays" formControlName="mandays" type="number" class="form-control" />
+              <div *ngIf="changeRequestForm.get('mandays')?.invalid && changeRequestForm.get('mandays')?.touched" class="text-danger small">
+                Mandays must be at least 1.
+              </div>
+          </div>
+          
+      <!-- Delivery Date -->
+          <div class="col-sm-6">
+              <label for="deliveryDate" class="form-label">Delivery Date</label>
+              <input
+                  id="deliveryDate"
+                  type="date"
+                  formControlName="deliveryDate"
+                  [min]="today"
+                  class="form-control"
+                  [min]="minDeliveryDate" 
+              />
+          </div>
+      </div>
+
+      <!-- Comment -->
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <div class="ckeditor-wrapper">
+          <ckeditor
+            [editor]="Editor"
+            formControlName="comment"
+            [config]="config"
+          ></ckeditor>    
+        </div> 
+        <div *ngIf="changeRequestForm.get('comment')?.invalid && changeRequestForm.get('comment')?.touched" class="text-danger small">
+          Please provide Comment
+      </div>        
+      </div>
+      <!-- Employee -->
+      <div class="mb-3">
+        <label for="jpayrollEmployee" class="form-label">JPayroll Employee</label>
+        <ngx-select-dropdown
+        [options]="employees"
+        formControlName="jpayrollEmployee"
+        [config]="selectEmployeeConfig"
+        (change)="onEmployeeChange($event)"
+        [multiple]="false"
+      ></ngx-select-dropdown>    
+        <div *ngIf="changeRequestForm.get('jpayrollEmployee')?.invalid && changeRequestForm.get('jpayrollEmployee')?.touched" class="text-danger small">
+          Please pick an Employee
+        </div>
+      </div>
+  
+      <!-- Files -->
+      <div class="mb-3">
+        <label for="files" class="form-label">Upload Files</label>
+        <input
+            id="files"
+            type="file"
+            (change)="onFileChange($event)"
+            class="form-control"
+        />
+      </div>
+      <div *ngIf="changeRequestForm.get('files')?.invalid && changeRequestForm.get('files')?.touched" class="text-danger small">
+        Please Upload a file
+      </div>
+    
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
+  </form>
+</div>

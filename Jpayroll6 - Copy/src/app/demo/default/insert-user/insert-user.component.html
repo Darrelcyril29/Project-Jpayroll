@@ -1,0 +1,72 @@
+<div class="container my-5">
+    <h1 class="text-center mb-4">User Form</h1>
+  
+    <form [formGroup]="InsertUser" (ngSubmit)="onSubmit()">
+  
+      <!-- UserName-->
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <label for="Name" class="form-label">Employee Name</label>
+          <input id="Name" formControlName="Name" class="form-control" />
+          <div *ngIf="InsertUser.get('Name')?.invalid && InsertUser.get('Name')?.touched" class="text-danger small">
+            Please provide Name
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="col-sm-6">
+          <label for="Email" class="form-label">Email</label>
+          <input id="Email" formControlName="Email" class="form-control" />
+          <div *ngIf="InsertUser.get('Email')?.invalid && InsertUser.get('Email')?.touched" class="text-danger small">
+            Please provide Email
+          </div>
+        </div>
+      </div>
+  
+      <!-- User Type -->
+      <div class="mb-3">
+        <label for="UserType" class="form-label">User Type</label>
+        <select id="UserType" formControlName="UserType" class="form-select">
+          <option *ngFor="let option of UserTypeOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+        <div *ngIf="InsertUser.get('UserType')?.invalid && InsertUser.get('UserType')?.touched" class="text-danger small">
+          Please select a User Type
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="InactiveDate" class="form-label">Inactive Date</label>
+        <input
+            id="InactiveDate"
+            type="date"
+            [min]="today"
+            formControlName="InactiveDate"
+            class="form-control"
+        />
+      </div>
+  
+      <!-- Password -->
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <label for="Password" class="form-label">Password</label>
+          <input id="Password" formControlName="Password" class="form-control" type="password" />
+          <div *ngIf="InsertUser.get('Password')?.invalid && InsertUser.get('Password')?.touched" class="text-danger small">
+            Please provide Password
+          </div>
+        </div>
+  
+        <!-- Confirm Password -->
+        <div class="col-sm-6">
+          <label for="ConfirmPassword" class="form-label">Confirm Password</label>
+          <input id="ConfirmPassword" formControlName="ConfirmPassword" class="form-control" type="password" />
+          <div *ngIf="InsertUser.get('ConfirmPassword')?.invalid && InsertUser.get('ConfirmPassword')?.touched" class="text-danger small">
+            Passwword Missmatched
+          </div>
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+  </div>
+  

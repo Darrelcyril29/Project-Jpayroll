@@ -1,0 +1,78 @@
+/**======================================================================
+=========================================================================
+Template Name: DashboardKit - Most Complete Bootstrap Admin Template
+Author: Phoenixcoded
+Support: support@phoenixcoded.net
+File: style.css
+=========================================================================
+=================================================================================== */
+
+// main framework
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/variables-dark';
+
+@import 'scss/settings/color-variables';
+@import 'scss/settings/theme-variables';
+@import 'scss/settings/bootstrap-variables';
+
+// bootstrap import
+@import 'scss/bootstrap/bootstrap.scss';
+
+@import 'node_modules/bootstrap/scss/utilities';
+@import 'node_modules/bootstrap/scss/utilities/api';
+
+// main framework
+@import 'scss/themes/generic.scss';
+@import 'scss/themes/general.scss';
+
+@import 'scss/themes/components/components.scss';
+
+// theme
+@import 'scss/themes/layouts/menu/sidebar.scss';
+@import 'scss/themes/layouts/navbar/navbar.scss';
+@import 'scss/themes/layouts/pc-common.scss';
+@import 'scss/themes/layouts/breadcrumb/breadcrumb.scss';
+@import 'scss/themes/layouts/footer/footer.scss';
+
+@import 'scss/themes/preset-style.scss';
+
+//Cke Editor
+@import 'ckeditor5/ckeditor5.css';
+@import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
+
+.context-menu {
+    position: fixed;
+    width: 150px;
+    border: 1px solid #ddd;
+    background: #fff;
+    z-index: 1000;
+  }
+  .context-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .context-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  .context-menu li:hover {
+    background-color: #f0f0f0;
+  }
+
+
+  .status-pending {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .status-progress {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-completed {
+    color: green;
+    font-weight: bold;
+  }

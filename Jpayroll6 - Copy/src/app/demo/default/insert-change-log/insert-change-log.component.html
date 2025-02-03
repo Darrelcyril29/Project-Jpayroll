@@ -1,0 +1,65 @@
+<div class="container my-5">
+    <h1 class="text-center mb-4">Change Log Form</h1>
+    
+    <form [formGroup]="InsertChangeLog" (ngSubmit)="onSubmit()">
+        <!-- Change Order Details -->
+        <div class="mb-3">
+            <label for="changeOrder" class="form-label">Change Order</label>
+            <input 
+                id="changeOrder" 
+                formControlName="changeOrder" 
+                class="form-control" 
+                [readonly]="true" 
+            />
+        </div>
+  
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input id="title" formControlName="title" class="form-control" />
+            <div *ngIf="InsertChangeLog.get('title')?.invalid && InsertChangeLog.get('title')?.touched" class="text-danger small">
+            Please provide title
+            </div>
+        </div>
+    
+        <!-- Comment -->
+        <div class="mb-3">
+            <label for="comment" class="form-label">Comment</label>
+            <ckeditor
+            [editor]="Editor"
+            formControlName="comment"
+            [config]="config"
+            ></ckeditor>        
+        </div>
+        
+        <!-- Employee -->
+        <div class="mb-3">
+            <label for="jpayrollEmployee" class="form-label">JPayroll Employee</label>
+            <ngx-select-dropdown
+            [options]="employees"
+            formControlName="jpayrollEmployee"
+            [config]="selectEmployeeConfig"
+            (change)="onEmployeeChange($event)"
+            [multiple]="false"
+            ></ngx-select-dropdown>    
+            <div *ngIf="InsertChangeLog.get('jpayrollEmployee')?.invalid && InsertChangeLog.get('jpayrollEmployee')?.touched" class="text-danger small">
+                Please pick an Employee
+            </div>
+        </div>
+    
+        <!-- File Upload -->
+        <div class="mb-3">
+            <label for="files" class="form-label">Upload Files</label>
+            <input
+            id="files"
+            type="file"
+            (change)="onFileChange($event)"
+            class="form-control"
+            />
+        </div>
+    
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,171 @@
+<div class="container my-5">
+  <h1 class="text-center mb-4">Change Order Details</h1>
+
+  <form [formGroup]="changeRequestForm" (ngSubmit)="updateData()">
+    <!-- Company Details Fieldset -->
+    <fieldset class="border p-4 mb-4">
+      <legend class="w-auto px-2">Company Details</legend>
+
+      <div class="mb-3 row">
+        <label for="clientName" class="col-sm-3 col-form-label">Company Name</label>
+        <div class="col-sm-9">
+          <input id="clientName" formControlName="clientName" class="form-control" readonly="true">
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="customerAddress" class="col-sm-3 col-form-label">Customer Address</label>
+        <div class="col-sm-9">
+          <input id="customerAddress" formControlName="customerAddress" class="form-control" readonly="true" />
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Change Order -->
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <label for="changeOrder" class="form-label">Change Order</label>
+        <input id="changeOrder" formControlName="changeOrder" class="form-control" readonly />
+      </div>
+
+      <!-- Reference Number -->
+      <div class="col-sm-6">
+        <label for="refNo" class="form-label">Reference Number</label>
+        <input id="refNo" formControlName="refNo" class="form-control" readonly/>
+      </div>
+    </div>
+
+    <!-- Change Type -->
+    <div class="mb-3">
+      <label for="changeType" class="form-label">Change Type</label>
+      <input id="changeType" formControlName="changeType" class="form-control"  [readonly]="isReadonly" />
+    </div>
+
+    <!-- Other Change Type Details -->
+    <div *ngIf="changeRequestForm.get('changeType')?.value === 'Other'" class="mb-3">
+      <label for="changeDetails" class="col-sm-3 col-form-label">Change Details</label>
+      <div class="col-sm-9">
+        <input id="changeDetails" formControlName="changeDetails" class="form-control"  [readonly]="isReadonly" />
+      </div>
+    </div>
+
+    <!-- Change Details -->
+    <div class="mb-3">
+      <label for="changeDetails" class="form-label">Change Details</label>
+      <div class="ckeditor-wrapper">
+      <ckeditor 
+      [editor]="Editor" 
+      formControlName="changeDetails" 
+      [config]="config">
+      
+      </ckeditor>
+      </div>
+    </div>
+
+    <!-- Priority and Attachment -->
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <label class="form-label me-3">Priority</label>
+        <div *ngFor="let priority of priorities" class="form-check form-check-inline custom-radio">
+          <input type="radio" [value]="priority.value" formControlName="priority" class="form-check-input"  [readonly]="isReadonly"/>
+          <label class="form-check-label">{{ priority.label }}</label>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-check custom-checkbox">
+          <input type="checkbox" formControlName="Attachment" class="form-check-input"  [readonly]="isReadonly" />
+          <label class="form-check-label" for="Attachment">Attachment</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mandays -->
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <label for="mandays" class="form-label">Mandays</label>
+        <input id="mandays" formControlName="mandays" type="number" class="form-control"  [readonly]="isReadonly" />
+      </div>
+
+      <!-- Delivery Date -->
+      <div class="col-sm-6">
+        <label for="deliveryDate" class="form-label">Delivery Date</label>
+        <input id="deliveryDate" type="date" formControlName="deliveryDate" [min]="today" class="form-control" [min]="minDeliveryDate" [readonly]="isReadonly" />
+      </div>
+    </div>
+
+    <!-- Comment -->
+    <div class="mb-3">
+      <label for="comment" class="form-label">Comment</label>
+      <div class="ckeditor-wrapper">
+      <ckeditor 
+      [editor]="Editor" 
+      formControlName="comment" 
+      [config]="config"
+      [disabled]="true"
+      >
+      </ckeditor>
+    </div>
+    </div>
+
+    <!-- Status Progress -->
+    <div class="mb-3">
+      <label class="form-label me-3">Status Progress</label>
+      <div *ngFor="let statusprogress of statusprogresses" class="form-check form-check-inline custom-radio">
+        <input type="radio" [value]="statusprogress.value" formControlName="statusprogress" class="form-check-input"/>
+        <label class="form-check-label">{{ statusprogress.label }}</label>
+      </div>
+    </div>
+
+    <!-- Employee -->
+    <div class="mb-3"  *ngIf="isReadonly == true">
+      <label for="jpayrollEmployee" class="form-label">JPayroll Employee</label>
+      <input id="jpayrollEmployee" formControlName="jpayrollEmployee" class="form-control"  [readonly]="isReadonly" /> 
+    </div>
+    <div class="mb-3" *ngIf="isReadonly != true">
+      <label for="jpayrollEmployee" class="form-label">JPayroll Employee</label>
+      <ngx-select-dropdown
+      [options]="employees"
+      formControlName=""
+      [config]="selectEmployeeConfig"
+      [multiple]="false"
+    ></ngx-select-dropdown>    
+    </div>
+
+    <!-- Files -->
+    <div class="mb-3">
+      <a [href]="filePath" class="hyperblue-link" download>Download Attachment</a>
+    </div>
+
+    <!-- Files -->
+    <div class="mb-3">
+      <label for="files" class="form-label">Upload Files</label>
+      <input
+          id="files"
+          type="file"
+          (change)="onFileChange($event)"
+          class="form-control"
+      />
+    </div>
+    
+
+    <!-- Submit Button -->
+    <div class="row mb-3">
+      <div class="col" *ngIf="currentUserType == true">
+        <button type="button" (click)="makeInputsEditable()" class="btn btn-warning w-100">Edit</button>
+      </div>
+      <div class="col" *ngIf="currentUserType == true">
+        <button type="button" (click)="OnDelete()" class="btn btn-red w-100">Delete</button>
+      </div>
+    </div>    
+    <div class="row mb-3">
+      <div class="col" *ngIf="currentUserType == true">
+        <button type="button"   (click)="updateData()" class="btn btn-success w-100">Update</button>
+      </div>
+      <div class="col">
+        <button type="button" (click)="DownloadReport()" class="btn btn-primary w-100">Download Report</button>
+      </div>
+    
+    </div>
+  </form>
+</div>

@@ -1,0 +1,114 @@
+<div class="container my-5">
+    <h1 class="text-center mb-4">Client Details</h1>
+    <form [formGroup]="clientDetails" (ngSubmit)="onUpdate()">
+  
+      <!-- Customer Name -->
+      <div class="mb-3 row">
+        <label for="CustomerName" class="col-sm-3 col-form-label">Customer Name:</label>
+        <div class="col-sm-9">
+          <input id="CustomerName" formControlName="CustomerName" class="form-control" [readonly]="isReadonly"/>
+        </div>
+      </div>
+  
+      <!-- Address -->
+      <div class="mb-3 row">
+        <label for="customeraddress" class="col-sm-3 col-form-label">Address:</label>
+        <div class="col-sm-9">
+          <input id="Address" formControlName="Address" class="form-control" [readonly]="isReadonly"/>
+        </div>
+      </div>
+  
+      <!-- Province and Country -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="country" class="form-label">Country:</label>
+          <input id="Country" formControlName="Country" class="form-control" [readonly]="isReadonly"/>
+        </div>
+        <div class="col-md-6">
+          <label for="province" class="form-label">Province:</label>
+            <input id="Provinces" formControlName="Provinces" class="form-control" [readonly]="isReadonly"/>
+        </div>
+      </div>
+  
+      <!-- City and District -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="City" class="form-label">City:</label>
+            <input id="City" formControlName="City" class="form-control" [readonly]="isReadonly"/>
+        </div>
+        <div class="col-md-6">
+          <label for="District" class="form-label">District:</label>
+            <input id="District" formControlName="District" class="form-control" [readonly]="isReadonly"/>
+        </div>
+      </div>
+  
+      <!-- SubDistrict and Postal Code -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="SubDistrict" class="form-label">SubDistrict:</label>
+            <input id="SubDistrict" formControlName="SubDistrict" class="form-control" [readonly]="isReadonly"/>
+        </div>
+        <div class="col-md-6">
+          <label for="PostalCode" class="form-label">Postal Code:</label>
+          <input
+            id="PostalCode"
+            formControlName="PostalCode"
+            class="form-control"
+            type="number"
+            [readonly]="isReadonly"
+          />
+        </div>
+      </div>
+  
+      <!-- OnCloud, Hybrid Radio Buttons -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="col-sm-3 col-form-label">Cloud Option:</label>
+            <div class="col-sm-9 d-flex align-items-center">
+              <div *ngFor="let option of OnCLouds" class="form-check form-check-inline custom-radio">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="OnCloud"
+                  [value]="option.value"
+                  [readonly]="isReadonly"
+                />
+                <label class="form-check-label ms-2" for="cloudOption{{ option.value }}">{{ option.label }}</label>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="col-sm-3 col-form-label">Hybrid Option:</label>
+            <div class="col-sm-9 d-flex align-items-center">
+              <div *ngFor="let option of Hybrids" class="form-check form-check-inline custom-radio">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="Hybrid"
+                  [value]="option.value"
+                  id="hybridOption{{ option.value }}"
+                  [readonly]="isReadonly"
+                />
+                <label class="form-check-label ms-2" for="hybridOption{{ option.value }}">{{ option.label }}</label>
+              </div>
+            </div>
+        </div>
+      </div>
+
+    <!-- CloudName (Conditional Input) -->
+    <div class="row mb-3" *ngIf="clientDetails.get('OnCloud')?.value === 1">
+      <div class="mb-3 row">
+        <label for="CloudName" class="col-sm-3 col-form-label">Cloud Name:</label>
+        <div class="col-sm-9">
+          <input id="CloudName" formControlName="CloudName" class="form-control"/>
+        </div>
+      </div>
+    </div>
+  
+      <!-- Submit Button -->
+      <div  *ngIf="currentUserType == true" class="text-center mt-5">
+        <button type="submit" class="btn btn-success w-100">Update</button>
+      </div>
+    </form>
+  </div>
+  

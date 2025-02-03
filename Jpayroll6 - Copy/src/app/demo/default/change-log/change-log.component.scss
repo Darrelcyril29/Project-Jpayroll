@@ -1,0 +1,17 @@
+.limited-editor .ck-editor__editable {
+  max-height: 100 px; /* Adjust height to show only a few lines */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.comment-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.5em; /* Adjust line height to match your font size (3 lines x line height) */
+  line-height: 1.5em; /* Match your text's line height */
+}

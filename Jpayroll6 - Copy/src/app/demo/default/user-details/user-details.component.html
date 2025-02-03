@@ -1,0 +1,58 @@
+<div class="container my-5">
+    <h1 class="text-center mb-4">User Details</h1>
+  
+    <form [formGroup]="UserDetails" (ngSubmit)="onSubmit()">
+  
+      <!-- UserName-->
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <label for="Name" class="form-label">Employee Name</label>
+          <input id="Name" formControlName="Name" class="form-control" />
+          <div *ngIf="UserDetails.get('Name')?.invalid && UserDetails.get('Name')?.touched" class="text-danger small">
+            Please provide Name
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="col-sm-6">
+          <label for="Email" class="form-label">Email</label>
+          <input id="Email" formControlName="Email" class="form-control" />
+          <div *ngIf="UserDetails.get('Email')?.invalid && UserDetails.get('Email')?.touched" class="text-danger small">
+            Please provide Email
+          </div>
+        </div>
+      </div>
+  
+      <!-- User Type -->
+      <div class="mb-3">
+        <label for="UserType" class="form-label">User Type</label>
+        <select id="UserType" formControlName="UserType" class="form-select">
+          <option *ngFor="let option of UserTypeOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+        <div *ngIf="UserDetails.get('UserType')?.invalid && UserDetails.get('UserType')?.touched" class="text-danger small">
+          Please select a User Type
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="InactiveDate" class="form-label">Inactive Date</label>
+        <input
+            id="InactiveDate"
+            type="date"
+            [min]="today"
+            formControlName="InactiveDate"
+            class="form-control"
+        />
+      </div>
+      <!-- Submit Button -->
+      <div class="row mb-3">
+        <div class="col">
+          <button type="button"   (click)="onSubmit()" class="btn btn-success w-100">Update</button>
+        </div>
+        <div class="col">
+          <button type="button" (click)="onDelete()" class="btn btn-primary w-100">Delete User</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  

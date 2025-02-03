@@ -1,0 +1,32 @@
+.custom-radio .form-check-input {
+  border: 2px solid #333; 
+  border-radius: 50%; 
+  width: 18px;
+  height: 18px;
+}
+
+.custom-radio .form-check-input:checked {
+  background-color: #007bff; 
+  border-color: #007bff;
+}
+
+/* Custom styles for checkboxes */
+.custom-checkbox .form-check-input {
+  border: 2px solid #333;
+  width: 18px;
+  height: 18px;
+}
+
+.custom-checkbox .form-check-input:checked {
+  background-color: #007bff; 
+  border-color: #007bff;
+}
+
+.form-control[readonly] {
+  background-color: #ffffff; 
+
+}
+
+.ckeditor-wrapper .ck-editor__editable {
+  min-height: 200px;  /* Adjust this value as needed */
+}

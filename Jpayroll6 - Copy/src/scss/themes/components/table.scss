@@ -1,0 +1,43 @@
+/* Custom styles for table headers */
+ngx-datatable.material {
+  border-radius: 12px; /* Rounded corners for the table */
+  overflow: hidden;
+
+  .datatable-header {
+      padding: 0.9rem 0.5rem 0.7rem;
+      vertical-align: middle;
+
+      &:first-child {
+        padding-left: -1px;
+      }
+      &:last-child {
+        padding-right: 24px;
+      }
+      border: none !important;
+      background-color: #fafafa;
+      border-top: 1px solid #f0f0f0;
+      border-bottom: 2px solid #f0f0f0;
+      font-size: 16px;
+  }
+
+  .datatable-row-group {
+    border-top: none;
+  }
+
+  .datatable-body-row {
+    transition: background-color 0.3s ease;
+    background-color: white;
+    
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    .datatable-body-cell {
+      padding: 12px 20px; 
+      font-size: 16px;
+      color: #2d3748;
+      text-align: left;
+    }
+  }
+
+}

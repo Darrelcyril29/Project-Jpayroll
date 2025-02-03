@@ -1,0 +1,16 @@
+.hyperblue-link {
+    color: blue; /* Set the color to blue */
+    text-decoration: underline; /* Add underline for a hyperlink style */
+    font-weight: bold; /* Make it bold */
+    cursor: pointer; /* Change the cursor to a pointer */
+  }
+  
+  .hyperblue-link:hover {
+    color: darkblue; /* Change to a darker blue on hover */
+    text-decoration: none; /* Optionally remove underline on hover */
+  }
+
+  .btn-red{
+    background-color: red;
+  }
+  

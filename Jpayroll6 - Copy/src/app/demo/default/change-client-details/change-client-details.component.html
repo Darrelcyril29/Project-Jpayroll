@@ -1,0 +1,102 @@
+<div class="p-5">
+    <!-- Client Name Card -->
+    <div class="card mb-3 p-3 bg-light border rounded-lg text-center">
+        <h5 class="card-title">Change Order List {{ clientName }}</h5>
+    </div>
+    <!-- Search Bar Button Add -->
+    <div class="mb-3 d-flex justify-content-between">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Search.." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+      />
+      
+      <a  *ngIf="currentUserType == true" href="/ChangeForm">
+        <button class="btn btn-primary ms-2">Add</button>
+      </a>
+    </div>
+    
+    <ngx-datatable
+      class="material rounded-lg border border-gray-300"
+      [rows]="paginatedRows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="pageSize"
+      [count]="filteredRows.length"
+      [offset]="page.offset"
+      (page)='onPage($event)'
+  
+    >
+      <ngx-datatable-column name="Change Order" prop="ChangeOrder">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div (contextmenu)="onContextMenu($event, row)">
+            {{ row.ChangeOrder }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Reference Number" prop="RefNumber">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div (contextmenu)="onContextMenu($event, row)">
+            {{ row.RefNumber }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Change Type" prop="ChangeType">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div (contextmenu)="onContextMenu($event, row)">
+            {{ row.ChangeType }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Status" prop="StatusProgress" [cellClass]="getStatusClass">
+        <ng-template let-value="value"  ngx-datatable-cell-template let-row="row">
+          <div (contextmenu)="onContextMenu($event, row)"
+          [ngClass]="getStatusClass(value)">
+            {{ row.StatusProgress }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+    <div 
+    *ngIf="contextMenuVisible" 
+    [ngStyle]="{ top: contextMenuPosition.y + 'px', left: contextMenuPosition.x + 'px' }" 
+    class="context-menu bg-white shadow-lg rounded-lg p-2 absolute z-10"
+  >
+    <ul class="list-none p-0 m-0">
+      <li class="cursor-pointer p-2 hover:bg-gray-200" (click)="openChangeDetail(selectedRow.ChangeOrder)">Open</li>
+      <li class="cursor-pointer p-2 hover:bg-gray-200" *ngIf="currentUserType == true" (click)="onChangeLogClick(selectedRow.ChangeOrder, selectedRow.ClientName)">Change Log</li>
+    </ul>
+  </div>
+  
+    <!-- Custom Pagination Controls -->
+    <div class="d-flex justify-content-between mt-3">
+      <div class="mb-2">
+        <p class="text-sm text-black">Showing</p>
+        <select class="border border-gray-300 rounded-lg p-1" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)">
+          <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+        </select>
+        <p class="text-sm text-black mt-3">of {{ filteredRows.length }} records</p>
+      </div>
+      <div>
+        <button
+          (click)="onPreviousPage()"
+          class="btn btn-secondary me-3"
+          [disabled]="page.offset === 0">
+          Previous
+        </button>
+      
+        <button
+          (click)="onNextPage()"
+          class="btn btn-primary"
+          [disabled]="isLastPage()">
+          Next
+        </button>
+      </div>
+      
+    </div>  
+  </div>
+  
