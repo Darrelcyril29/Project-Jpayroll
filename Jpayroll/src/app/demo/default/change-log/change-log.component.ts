@@ -29,8 +29,8 @@ export default class ChangeLogComponent implements OnInit {
 
   public Editor = ClassicEditor;
   public editorConfig = {
-    toolbar: [], // Hide toolbar since it's read-only
-    isReadOnly: true, // Ensure the editor is read-only
+    toolbar: [], 
+    isReadOnly: true, 
   };
 
   constructor(

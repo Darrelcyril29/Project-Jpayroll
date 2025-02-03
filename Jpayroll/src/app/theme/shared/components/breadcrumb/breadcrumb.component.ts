@@ -59,8 +59,7 @@ export class BreadcrumbComponent {
       if (router instanceof NavigationEnd) {
         const activeLink = router.url;
         const breadcrumbList = this.filterNavigation(this.navigations, activeLink);
-        this.navigationList = breadcrumbList;
-        const title = breadcrumbList[breadcrumbList.length - 1]?.title || 'Welcome';
+        const title = 'Jpayroll';
         this.titleService.setTitle(title);
       }
     });
