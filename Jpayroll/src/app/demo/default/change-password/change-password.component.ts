@@ -14,6 +14,22 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 export default class ChangePasswordComponent implements OnInit {
   ChangePassword: FormGroup;
   UserId: string;
+  showOldPassword: boolean = false;
+  showNewPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+  Oldpassword : string;
+  Newpassword : string;
+  Confirmpassword : string;
+
+  toggleOldPasswordVisibility() {
+    this.showOldPassword = !this.showOldPassword;
+  }
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
   encryptToBase64(data: string): string {
     return btoa(data); 
@@ -57,6 +73,7 @@ export default class ChangePasswordComponent implements OnInit {
         OldPassword: this.ChangePassword.get('OldPassword')?.value,
         Newpassword: this.ChangePassword.get('Password')?.value,
       };
+      console.log(formData)
       this.userService.Updatepassword(formData).subscribe(
         (response: any) => {
           if (response.status === 'success') {

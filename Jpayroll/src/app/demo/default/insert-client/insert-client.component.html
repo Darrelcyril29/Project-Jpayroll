@@ -4,9 +4,12 @@
 
     <!-- Customer Name -->
     <div class="mb-3 row">
-      <label for="customeraddress" class="col-sm-3 col-form-label">Customer Name:</label>
+      <label for="CustomerName" class="col-sm-3 col-form-label">Customer Name:</label>
       <div class="col-sm-9">
         <input id="CustomerName" formControlName="CustomerName" class="form-control" />
+      </div>
+      <div *ngIf="clientForm.get('CustomerName')?.invalid && clientForm.get('CustomerName')?.touched" class="text-danger small">
+        Please insert a Customer Name
       </div>
     </div>
 
@@ -15,6 +18,9 @@
       <label for="customeraddress" class="col-sm-3 col-form-label">Address:</label>
       <div class="col-sm-9">
         <input id="Address" formControlName="Address" class="form-control" />
+      </div>
+      <div *ngIf="clientForm.get('Address')?.invalid && clientForm.get('Address')?.touched" class="text-danger small">
+        Please insert a Address
       </div>
     </div>
 
@@ -75,6 +81,9 @@
             <label class="form-check-label ms-2" for="cloudOption{{ option.value }}">{{ option.label }}</label>
           </div>
         </div>
+        <div *ngIf="clientForm.get('OnCloud')?.invalid && clientForm.get('OnCloud')?.touched" class="text-danger small">
+          Please select a Cloud
+        </div>
       </div>
       <div class="col-md-6">
         <label class="col-sm-3 col-form-label">Hybrid Option:</label>
@@ -89,6 +98,9 @@
             />
             <label class="form-check-label ms-2" for="hybridOption{{ option.value }}">{{ option.label }}</label>
           </div>
+        </div>
+        <div *ngIf="clientForm.get('Hybrid')?.invalid && clientForm.get('Hybrid')?.touched" class="text-danger small">
+          Please select a Cloud Type
         </div>
       </div>
     </div>

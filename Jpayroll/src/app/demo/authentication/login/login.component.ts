@@ -16,6 +16,12 @@ export default class LoginComponent {
   errorMessage: string | null = null;
   email: string = '';
   password = '';
+
+  showPassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
   constructor(private router: Router, private userService: UserService, private route: ActivatedRoute) {}
 
 

@@ -99,6 +99,7 @@ export default class InsertClientComponent implements OnInit{
       
     } else {
       alert('Form is invalid');
+      this.clientForm.markAllAsTouched();
     }
   }
 }

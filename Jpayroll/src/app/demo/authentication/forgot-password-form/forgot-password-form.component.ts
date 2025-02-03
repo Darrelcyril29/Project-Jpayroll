@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
+import { StandardEditingMode } from 'ckeditor5';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -19,6 +20,18 @@ export default class ForgotPasswordFormComponent implements OnInit {
   ChangePassword: FormGroup;
   UserId: string;
   otp: number;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+  Password: string;
+  ConfirmPassword: String;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
   encryptToBase64(data: string): string {
     return btoa(data); 
@@ -107,6 +120,7 @@ export default class ForgotPasswordFormComponent implements OnInit {
       this.userService.forgotPassword(formData).subscribe(
         (response: any) => {
           if (response.status === 'success') {
+            this.router.navigate(['/Login']);
             alert(response.message);
           } else if (response.status === 'error') {
             alert(response.message);
