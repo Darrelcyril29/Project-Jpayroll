@@ -53,7 +53,7 @@ export default class UserDetailsComponent implements OnInit {
     this.UserDetails = this.fb.group(
       {
         Name: ['', Validators.required],
-        Email: ['', [Validators.required], [EmailValidator]],
+        Email: ['', [Validators.required]],
         UserType: ['', Validators.required],
         InactiveDate: ['', Validators.required]
       },
@@ -64,7 +64,6 @@ export default class UserDetailsComponent implements OnInit {
     const state = this.location.getState();
     if (state && state['UserId']) {
       this.UserId = state['UserId'];
-      console.log(this.UserId)
       this.fetchUserDetails(this.UserId);
     }
   }
@@ -74,7 +73,6 @@ export default class UserDetailsComponent implements OnInit {
       (data) => {
         if (data && data.status === 'success' && data.data.length > 0) {
           const UserDetails = data.data[0]; 
-          console.log(UserDetails)
           this.UserDetails.patchValue({
             Name: UserDetails.Name,
             Email: UserDetails.Email,
