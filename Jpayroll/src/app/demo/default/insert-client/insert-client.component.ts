@@ -4,6 +4,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { CommonModule } from '@angular/common';
 import { UserService } from '../Back-End/user.service';
 import { Router } from '@angular/router';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -15,14 +16,47 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None 
 })
 export default class InsertClientComponent implements OnInit{
-  province: any[] = [];
-  countries : any[] = [];
-  City : any[] = [];
-  District : any[] = [];
-  SubDistrict : any[] = [];
   clients: any[] = []; 
   clientForm: FormGroup;
 
+  countries = [
+    { id: 'ID', name: 'Indonesia' }
+  ];
+
+  private allProvinces = [
+    { id: 'DKI Jakarta', name: 'DKI Jakarta', countryId: 'ID' },
+    { id: 'Jawa Barat', name: 'Jawa Barat', countryId: 'ID' },
+    { id: 'Jawa Tengah', name: 'Jawa Tengah', countryId: 'ID' }
+  ];
+
+  private allCities = [
+    { id: 'Jakarta Selatan', name: 'Jakarta Selatan', provinceId: 'DKI Jakarta' },
+    { id: 'Jakarta Pusat', name: 'Jakarta Pusat', provinceId: 'DKI Jakarta' },
+    { id: 'Bandung', name: 'Bandung', provinceId: 'Jawa Barat' },
+    { id: 'Pulau', name: 'Pulau', provinceId: 'Jawa Barat' },
+    { id: 'Semarang', name: 'Semarang', provinceId: 'Jawa Tengah' }
+  ];
+
+  private allDistricts = [
+    { id: 'Kebayoran Baru', name: 'Kebayoran Baru', cityId: 'Jakarta Selatan' },
+    { id: 'Mampang Prapatan', name: 'Mampang Prapatan', cityId: 'Jakarta Selatan' },
+    { id: 'Babatan Pantai', name: 'Babatan Pantai', cityId: 'Jakarta Pusat' },
+    { id: 'Coblong', name: 'Coblong', cityId: 'Bandung' },
+    { id: 'Tembalang', name: 'Tembalang', cityId: 'Semarang' }
+  ];
+
+  private allSubDistricts = [
+    { id: 'Selong', name: 'Selong', districtId: 'Kebayoran Baru' },
+    { id: 'Gandaria', name: 'Gandaria', districtId: 'Kebayoran Baru' },
+    { id: 'Dago', name: 'Dago', districtId: 'Coblong' },
+    { id: 'Bonggo', name: 'Bonggo', districtId: 'Tembalang' }
+  ];
+
+  // Filtered display data
+  provinces = this.allProvinces;
+  cities = this.allCities;
+  districts = this.allDistricts;
+  subDistricts = this.allSubDistricts;
   OnCLouds = [
     { label: 'Cloud', value: 1 },
     { label: 'OnPremises', value: 0 },
@@ -59,9 +93,42 @@ export default class InsertClientComponent implements OnInit{
   
 
   ngOnInit(): void {
+    this.setupDropdownListeners();
+    // Set default country to Indonesia
+    this.clientForm.get('Country')?.setValue('ID');
   }
 
+  private setupDropdownListeners() {
+    // Country -> Provinces
+    this.clientForm.get('Country')?.valueChanges.subscribe(countryId => {
+      this.provinces = this.allProvinces.filter(p => p.countryId === countryId);
+      this.resetDependentControls(['Provinces', 'City', 'District', 'SubDistrict']);
+    });
 
+    // Province -> Cities
+    this.clientForm.get('Provinces')?.valueChanges.subscribe(provinceId => {
+      this.cities = this.allCities.filter(c => c.provinceId === provinceId);
+      this.resetDependentControls(['City', 'District', 'SubDistrict']);
+    });
+
+    // City -> Districts
+    this.clientForm.get('City')?.valueChanges.subscribe(cityId => {
+      this.districts = this.allDistricts.filter(d => d.cityId === cityId);
+      this.resetDependentControls(['District', 'SubDistrict']);
+    });
+
+    // District -> SubDistricts
+    this.clientForm.get('District')?.valueChanges.subscribe(districtId => {
+      this.subDistricts = this.allSubDistricts.filter(sd => sd.districtId === districtId);
+      this.clientForm.get('SubDistrict')?.reset();
+    });
+  }
+
+  private resetDependentControls(controls: string[]) {
+    controls.forEach(control => {
+      this.clientForm.get(control)?.reset();
+    });
+  }
 
   onSubmit() {
     const confirmation = confirm('Are you sure you want to add client');
