@@ -29,8 +29,8 @@ export default class ChangeLogComponent implements OnInit {
 
   public Editor = ClassicEditor;
   public editorConfig = {
-    toolbar: [], // Hide toolbar since it's read-only
-    isReadOnly: true, // Ensure the editor is read-only
+    toolbar: [], 
+    isReadOnly: true, 
   };
 
   constructor(
@@ -47,9 +47,7 @@ export default class ChangeLogComponent implements OnInit {
 
   ngOnInit(): void {
     const state = this.location.getState();
-    console.log(state)
     this.changetype = state['changeType']
-    console.log(this.changetype)
     if (state && state['changeOrder'] && state['company']) {
       this.changeOrderId = state['changeOrder'];
       this.companyname = state['company'];
@@ -65,7 +63,6 @@ export default class ChangeLogComponent implements OnInit {
       (data) => {
         if (data && data.status === 'success' && data.data.length > 0) {
           this.changeOrderData = data.data;
-          console.log(this.changeOrderData)
         } else {
           console.error('No data found or error in response:', data);
         }
@@ -107,53 +104,65 @@ export default class ChangeLogComponent implements OnInit {
   return plainText;
 }
 
-  downloadPdf(): void {
-    const doc = new jsPDF('landscape'); // Landscape mode for more space
-  
-    // Add title
-    doc.setFontSize(16);
-    doc.text(`Change Log List - ${this.companyname}`, 14, 10);
-  
-    // Add subtitle
-    doc.setFontSize(12);
-    doc.text(
-      `Change Order: ${this.changeOrderId}   Change Type: ${this.changetype}`,
-      14,
-      20
-    );
-  
-    // Prepare table data
-    const tableData = this.changeOrderData.map(item => [
-      item.Title || '',
-      item.UploadDate || '',
-      item.Comment || '', // Leave Comment as HTML for processing by html2pdf.js
-      item.UserName || '',
-    ]);
-  
-    // Render table
-    const startY = 30; // Starting position for the table
-    (doc as any).autoTable({
-      startY,
-      head: [['Title', 'Timestamp', 'Comment', 'Employee']], // Table headers
-      body: tableData.map(row => [
-        row[0], // Title
-        row[1], // Timestamp
-        { content: this.convertHtmlToRichText(row[2]), styles: { halign: 'left' } }, // Use converted rich text
-        row[3], // Employee
-      ]),
-      styles: {
-        fontSize: 10,
-        cellPadding: 3,
-      },
-      headStyles: {
-        fillColor: [22, 160, 133],
-        textColor: [255, 255, 255],
-      },
-    });
-  
-    // Save the PDF
-    doc.save(`Change_Log_${this.changeOrderId}.pdf`);
-  }
+downloadPdf(): void {
+  const doc = new jsPDF('landscape'); 
+  const img = new Image();
+  img.src = '../../../assets/images/JpayrollLogo.png';
+
+  // Define margins and logo dimensions
+  const margin = 10;
+  const logoWidth = 50;
+  const logoHeight = 15;
+
+  // Add the logo at the top left
+  doc.addImage(img, 'PNG', margin, margin, logoWidth, logoHeight);
+
+  doc.setFontSize(16);
+  const textX = margin + logoWidth + 10;
+  const textY = margin + logoHeight / 2 + 5;
+  doc.text(`Change Log List - ${this.companyname}`, textX, textY);
+
+  // Add a subtitle below the header
+  const subtitleY = margin + logoHeight + 15;
+  doc.setFontSize(12);
+  doc.text(
+    `Change Order: ${this.changeOrderId}   Change Type: ${this.changetype}`,
+    margin,
+    subtitleY
+  );
+
+  // Prepare table data
+  const tableData = this.changeOrderData.map(item => [
+    item.Title || '',
+    item.UploadDate || '',
+    item.Comment || '',
+    item.UserName || '',
+  ]);
+
+  // Render table starting below the header and subtitle
+  const startY = subtitleY + 5;
+  (doc as any).autoTable({
+    startY,
+    head: [['Title', 'Timestamp', 'Comment', 'Employee']],
+    body: tableData.map(row => [
+      row[0],
+      row[1],
+      { content: this.convertHtmlToRichText(row[2]), styles: { halign: 'left' } },
+      row[3],
+    ]),
+    styles: {
+      fontSize: 10,
+      cellPadding: 3,
+    },
+    headStyles: {
+      fillColor: [22, 160, 133],
+      textColor: [255, 255, 255],
+    },
+  });
+
+  // Save the PDF
+  doc.save(`Change_Log_${this.changeOrderId}.pdf`);
+}
   
   // Helper function to parse HTML into rich-text-compatible content for jsPDF
   convertHtmlToRichText(html: string): string {

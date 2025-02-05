@@ -2,6 +2,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 // project import
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -35,7 +37,9 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     CardComponent,
     IconModule,
     NgxDatatableModule,
-    SelectDropDownModule
+    SelectDropDownModule,
+    MatIconModule,
+    MatButtonModule
   ],
   exports: [
     CommonModule,
@@ -50,7 +54,9 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     NgScrollbarModule,
     CardComponent,
     IconModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatIconModule,
+    MatButtonModule
   ],
   declarations: [SpinnerComponent]
 })

@@ -59,6 +59,20 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
+
+      <ngx-datatable-column name="Actions">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div (contextmenu)="onContextMenu($event, row)">
+            <button mat-icon-button (click)="openChangeDetail(row.ChangeOrder)">
+              <span class="e-icons e-circle-info  e-large"></span>
+            </button>          
+    
+            <button mat-icon-button (click)="onChangeLogClick(row.ChangeOrder, row.ClientName, row.RefNumber, row.ChangeType)">
+              <span class="e-icons e-clock e-large"></span>
+            </button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
     </ngx-datatable>
 
     <div 
@@ -68,7 +82,7 @@
   >
     <ul class="list-none p-0 m-0">
       <li class="cursor-pointer p-2 hover:bg-gray-200" (click)="openChangeDetail(selectedRow.ChangeOrder)">Open</li>
-      <li class="cursor-pointer p-2 hover:bg-gray-200" *ngIf="currentUserType == true" (click)="onChangeLogClick(selectedRow.ChangeOrder, selectedRow.ClientName)">Change Log</li>
+      <li class="cursor-pointer p-2 hover:bg-gray-200" *ngIf="currentUserType == true" (click)="onChangeLogClick(selectedRow.ChangeOrder, selectedRow.ClientName, selectedRow.RefNumber, selectedRow.ChangeType)">Change Log</li>
     </ul>
   </div>
   
@@ -99,4 +113,6 @@
       
     </div>  
   </div>
+
+  <link href="https://cdn.syncfusion.com/ej2/ej2-icons/styles/bootstrap5.css" rel="stylesheet" />
   

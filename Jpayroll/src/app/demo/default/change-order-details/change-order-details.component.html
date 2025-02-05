@@ -1,5 +1,10 @@
 <div class="container my-5">
-  <h1 class="text-center mb-4">Change Order Details</h1>
+  <div class="d-flex align-items-center mb-4">
+    <h1 class="text-center flex-grow-1 mb-0">Change Order Details</h1>
+    <button type="button" (click)="OnDelete()" class="btn btn-danger">
+      <span class="e-icons e-trash e-large"></span>
+    </button>
+  </div>
 
   <form [formGroup]="changeRequestForm" (ngSubmit)="updateData()">
     <!-- Company Details Fieldset -->
@@ -149,23 +154,26 @@
     </div>
     
 
-    <!-- Submit Button -->
+    <!-- Submit Button -->   
     <div class="row mb-3">
-      <div class="col" *ngIf="currentUserType == true">
-        <button type="button" (click)="makeInputsEditable()" class="btn btn-warning w-100">Edit</button>
+      <div class="col text-center" *ngIf="currentUserType && isReadonly">
+        <button type="button" (click)="makeInputsEditable()" class="btn btn-warning">
+          <span class="e-icons e-edit e-large"></span>
+        </button>
       </div>
-      <div class="col" *ngIf="currentUserType == true">
-        <button type="button" (click)="OnDelete()" class="btn btn-red w-100">Delete</button>
+      <div class="col text-center" *ngIf="currentUserType && !isReadonly">
+        <button type="button" (click)="updateData()" class="btn btn-warning">
+          <span class="e-icons e-changes-track e-large"></span>
+        </button>
       </div>
-    </div>    
-    <div class="row mb-3">
-      <div class="col" *ngIf="currentUserType == true">
-        <button type="button"   (click)="updateData()" class="btn btn-success w-100">Update</button>
+      <div class="col text-center">
+        <button type="button" (click)="DownloadReport()" class="btn btn-primary">
+          <span class="e-icons e-download e-large"></span>
+        </button>
       </div>
-      <div class="col">
-        <button type="button" (click)="DownloadReport()" class="btn btn-primary w-100">Download Report</button>
-      </div>
-    
     </div>
   </form>
 </div>
+
+<link href="https://cdn.syncfusion.com/ej2/ej2-icons/styles/bootstrap5.css" rel="stylesheet" />
+

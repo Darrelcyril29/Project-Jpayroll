@@ -15,8 +15,6 @@ import { ClassicEditor,
 } from 'ckeditor5';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { Router } from '@angular/router';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 
 
 @Component({
@@ -170,6 +168,12 @@ export default class ChangeOrderDetailsComponent implements OnInit {
   }
 
   updateData() {
+    const confirmation = confirm('Are you sure you want to Update this change order?');
+    
+    if (!confirmation) {
+      this.isReadonly = !this.isReadonly;
+      return; // Exit if the user cancels
+    }
     if (this.changeRequestForm.invalid) {
       alert('Please fill all the required fields');
       return;
@@ -195,12 +199,12 @@ export default class ChangeOrderDetailsComponent implements OnInit {
       if (this.files.length > 0) {
         const fileUpload = new FormData();
         fileUpload.append('file', this.files[0]);
-  
-        // Chain the file upload and update API calls
+
         this.userService.uploadFiletodatabase(fileUpload).subscribe(
           (response) => {
-            formData.fileId = response.fileId; // Update fileId with the uploaded file's ID
-            this.callUpdateChangeOrder(formData); // Call the update API only after file upload completes
+            formData.fileId = response.fileId; 
+            this.callUpdateChangeOrder(formData); 
+            this.isReadonly = !this.isReadonly;
           },
           (error) => {
             alert('File upload failed. Please try again.');
@@ -208,7 +212,7 @@ export default class ChangeOrderDetailsComponent implements OnInit {
           }
         );
       } else {
-        // No file to upload, directly call the update API
+        this.isReadonly = !this.isReadonly;
         this.callUpdateChangeOrder(formData);
       }
     }
