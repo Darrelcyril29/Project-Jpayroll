@@ -60,7 +60,23 @@
       </div>
     </ng-template>
   </ngx-datatable-column>
+
+  <ngx-datatable-column name="Actions">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div (contextmenu)="onContextMenu($event, row)">
+        <button mat-icon-button (click)="openClientDetail(row.ClientId)">
+          <span class="e-icons e-circle-info  e-large"></span>
+        </button>          
+
+        <button mat-icon-button (click)="openClientChangeOrder(row.ClientId)">
+          <span class="e-icons e-clock e-large"></span>
+        </button>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
 </ngx-datatable>
+
+
 
 <!-- Context Menu -->
 <div 
@@ -100,3 +116,6 @@
     </div>
   </div>
 </div>
+
+<link href="https://cdn.syncfusion.com/ej2/ej2-icons/styles/bootstrap5.css" rel="stylesheet" />
+

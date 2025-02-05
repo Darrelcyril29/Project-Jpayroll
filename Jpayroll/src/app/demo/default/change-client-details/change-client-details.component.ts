@@ -146,9 +146,9 @@ export default class ChangeClientDetailsComponent {
     });
   }
 
-  onChangeLogClick(changeOrder: string, company: string) {
+  onChangeLogClick(changeOrder: string, company: string, refno: string, changeType: string) {
     this.router.navigate(['/ChangeLog'], {
-      state: { changeOrder, company }
+      state: { changeOrder, company, refno, changeType }
     });
   }
   

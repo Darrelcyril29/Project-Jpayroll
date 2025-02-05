@@ -47,9 +47,7 @@ export default class ChangeLogComponent implements OnInit {
 
   ngOnInit(): void {
     const state = this.location.getState();
-    console.log(state)
     this.changetype = state['changeType']
-    console.log(this.changetype)
     if (state && state['changeOrder'] && state['company']) {
       this.changeOrderId = state['changeOrder'];
       this.companyname = state['company'];
@@ -65,7 +63,6 @@ export default class ChangeLogComponent implements OnInit {
       (data) => {
         if (data && data.status === 'success' && data.data.length > 0) {
           this.changeOrderData = data.data;
-          console.log(this.changeOrderData)
         } else {
           console.error('No data found or error in response:', data);
         }
