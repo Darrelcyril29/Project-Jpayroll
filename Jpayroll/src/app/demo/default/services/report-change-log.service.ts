@@ -54,28 +54,28 @@ export class ReportChangeLogService {
     worksheet.mergeCells('A1:B2');
     
 
-    worksheet.mergeCells('C1:D1');
-    worksheet.getCell('C1').value = 'Change Order';
+    worksheet.mergeCells('C1:C2');
+    worksheet.getCell('C1').value = 'Change Order: ';
     worksheet.getCell('C1').font = { bold: true, size: 14 };
-    worksheet.getCell('C1').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getCell('C1').alignment = { vertical: 'middle', horizontal: 'right' };
 
-    worksheet.mergeCells('C2:D2');
-    worksheet.getCell('C2').value = changeOrderId;
-    worksheet.getCell('C2').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.mergeCells('D1:D2');
+    worksheet.getCell('D1').value = changeOrderId;
+    worksheet.getCell('D1').alignment = { vertical: 'middle', horizontal: 'left' };
 
-    worksheet.getCell('A3').value = 'Company Name';
+    worksheet.getCell('A3').value = 'Company Name: ';
     worksheet.getCell('A3').font = { bold: true, size: 14 };
-    worksheet.getCell('A3').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getCell('A3').alignment = { vertical: 'middle', horizontal: 'right' };
 
     worksheet.getCell('B3').value = companyName;
-    worksheet.getCell('B3').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getCell('B3').alignment = { vertical: 'middle', horizontal: 'left' };
 
-    worksheet.getCell('C3').value = 'Change Type';
+    worksheet.getCell('C3').value = 'Change Type: ';
     worksheet.getCell('C3').font = { bold: true, size: 14 };
-    worksheet.getCell('C3').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getCell('C3').alignment = { vertical: 'middle', horizontal: 'right' };
 
     worksheet.getCell('D3').value = changeType;
-    worksheet.getCell('D3').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getCell('D3').alignment = { vertical: 'middle', horizontal: 'left' };
    
 
     // 4) Blank row (Row 3)
