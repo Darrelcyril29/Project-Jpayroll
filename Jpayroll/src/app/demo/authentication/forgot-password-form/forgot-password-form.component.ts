@@ -68,8 +68,10 @@ export default class ForgotPasswordFormComponent implements OnInit {
       const headers = new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       });
+
+      const payload = { email };
   
-      this.http.post('backend/otp/SendOtp.php', body.toString(), { headers }).subscribe(
+      this.http.post('http://localhost:3000/send-otp', payload).subscribe(
         (response: any) => {
           if (response.status === 'success') {
             alert(`OTP sent to ${email}`);

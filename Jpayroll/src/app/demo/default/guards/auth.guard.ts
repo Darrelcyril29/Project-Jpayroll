@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
 
     // Redirect to login with alert if user is not authenticated
     if (!currentUser) {
-      window.alert('Username and password are invalid.');
+      //window.alert('Username and password are invalid.');
       this.router.navigate(['/login']);
       return false;
     }
