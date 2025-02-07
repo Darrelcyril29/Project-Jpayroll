@@ -27,6 +27,11 @@ export default class ChangeLogComponent implements OnInit {
   changeOrderData: any[] = [];
   changetype: string;
 
+  priorities = [
+    { label: 'Verified', value: 1 },
+    { label: 'On Pending', value: 2 }
+  ]
+
   public Editor = ClassicEditor;
   public editorConfig = {
     toolbar: [], 
@@ -63,6 +68,7 @@ export default class ChangeLogComponent implements OnInit {
       (data) => {
         if (data && data.status === 'success' && data.data.length > 0) {
           this.changeOrderData = data.data;
+          console.log(data)
         } else {
           console.error('No data found or error in response:', data);
         }
