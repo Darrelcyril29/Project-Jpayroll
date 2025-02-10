@@ -21,9 +21,10 @@ $comment = $postData['comment'] ?? null;
 $fileId = isset($postData['fileId']) ? (int)$postData['fileId'] : null;
 $title = $postData['title'] ?? null;
 $userId = $postData['userId'] ?? null;
+$verified = isset($postData['verified']) ? (int)$postData['verified'] : null;
 
 // Prepare the stored procedure call
-$stmt = $conn->prepare("CALL UpdateChangeLogById(?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("CALL UpdateChangeLogById(?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     echo json_encode(["status" => "error", "message" => "Failed to prepare statement: " . $conn->error]);
     exit();
@@ -31,12 +32,13 @@ if (!$stmt) {
 
 // Bind parameters
 $stmt->bind_param(
-    "issis",
+    "issisi",
     $changeLogId,
     $title,
     $userId,
     $fileId,
-    $comment
+    $comment,
+    $verified
 );
 
 // Execute the statement

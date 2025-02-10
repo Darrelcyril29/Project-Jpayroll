@@ -9,55 +9,55 @@ import { User } from 'src/app/demo/default/models/user';
 })
 export class UserService {
   //Get Data
-  private GetChangeOrderDetails = 'http://localhost/xampp/GetChangeOrderDetails.php'
-  private clientsUrl = 'http://localhost/xampp/getClients.php'; 
-  private employeesUrl = 'http://localhost/xampp/getEmployees.php';  
-  private changeorderurl = 'http://localhost/xampp/getChangeOrder.php';
-  private getStatusProgressUrl = 'http://localhost/xampp/GetStatusProgress.php';
-  private getClientChangeOrders = 'http://localhost/xampp/GetChangeOrderByClientId.php';
-  private getChangeLogDataByChangeOrder = 'http://localhost/xampp/GetChangeLogDataByChangeOrder.php';
-  private GetChanageLogById = 'http://localhost/xampp/GetChangeLogById.php';
-  private getClientbyClientID = "http://localhost/xampp/GetClientByClientID.php";
-  private getUsers = "http://localhost/xampp/GetUser.php";
-  private getUsersByUserId = "http://localhost/xampp/GetUserByUserId.php";
-  private recentchangeorderlog = "http://localhost/xampp/GetRecentChangeOrderLog.php";
+  private GetChangeOrderDetails = 'backend/GetChangeOrderDetails.php'
+  private clientsUrl = 'backend/getClients.php'; 
+  private employeesUrl = 'backend/getEmployees.php';  
+  private changeorderurl = 'backend/getChangeOrder.php';
+  private getStatusProgressUrl = 'backend/GetStatusProgress.php';
+  private getClientChangeOrders = 'backend/GetChangeOrderByClientId.php';
+  private getChangeLogDataByChangeOrder = 'backend/GetChangeLogDataByChangeOrder.php';
+  private GetChanageLogById = 'backend/GetChangeLogById.php';
+  private getClientbyClientID = "backend/GetClientByClientID.php";
+  private getUsers = "backend/GetUser.php";
+  private getUsersByUserId = "backend/GetUserByUserId.php";
+  private recentchangeorderlog = "backend/GetRecentChangeOrderLog.php";
 
   //Adresses
-  private GetProvince = 'http://localhost/xampp/GetProvince.php';
-  private GetCountry = 'http://localhost/xampp/GetCountry.php';
-  private GetCity = 'http://localhost/xampp/GetCity.php';
-  private GetDistrict = 'http://localhost/xampp/GetDistrict.php';
-  private GetSubDistrict = 'http://localhost/xampp/GetSubDistrict.php';
+  private GetProvince = 'backend/GetProvince.php';
+  private GetCountry = 'backend/GetCountry.php';
+  private GetCity = 'backend/GetCity.php';
+  private GetDistrict = 'backend/GetDistrict.php';
+  private GetSubDistrict = 'backend/GetSubDistrict.php';
 
   //insert Data
-  private insertchangeorder = 'http://localhost/xampp/InsertChangeOrder.php';
-  private InsertChangeLog = 'http://localhost/xampp/InsertChangeLog.php';
-  private insertClient = 'http://localhost/xampp/InsertClient.php';
-  private InsertUser = 'http://localhost/xampp/InsertUser.php';
+  private insertchangeorder = 'backend/InsertChangeOrder.php';
+  private InsertChangeLog = 'backend/InsertChangeLog.php';
+  private insertClient = 'backend/InsertClient.php';
+  private InsertUser = 'backend/InsertUser.php';
 
 
   //Update Data
-  private updatechangeorder = 'http://localhost/xampp/UpdateChangeOrder.php';
-  private updatepassword = 'http://localhost/xampp/ChangePassword.php';
-  private forgotpassword = 'http://localhost/xampp/ForgotPassword.php';
-  private UpdateUser = 'http://localhost/xampp/UpdateUser.php';
-  private updatechangelog = 'http://localhost/xampp/UpdateChangeLogByID.php';
-  private updateclient = 'http://localhost/xampp/updateClient.php';
+  private updatechangeorder = 'backend/UpdateChangeOrder.php';
+  private updatepassword = 'backend/ChangePassword.php';
+  private forgotpassword = 'backend/ForgotPassword.php';
+  private UpdateUser = 'backend/UpdateUser.php';
+  private updatechangelog = 'backend/UpdateChangeLogByID.php';
+  private updateclient = 'backend/updateClient.php';
 
   //Upload File
-  private FileUpload = 'http://localhost/xampp/upload.php';
-  private FileUploadtoDatabase = 'http://localhost/xampp/uploadfiletodatabase.php';
+  private FileUpload = 'backend/upload.php';
+  private FileUploadtoDatabase = 'backend/uploadfiletodatabase.php';
 
-  private sendotp = 'http://localhost/xampp/otp/SendOtp.php';
+  private sendotp = 'backend/otp/SendOtp.php';
 
-  private logincred = "http://localhost/xampp/LoginCred.php";
+  private logincred = "backend/LoginCred.php";
 
   //set inactive date user
-  private setInactive = "http://localhost/xampp/SetInactiveDateUser.php";
+  private setInactive = "backend/SetInactiveDateUser.php";
   
   //Delete Data
-  private deleteChangeOrder = "http://localhost/xampp/DeleteChangeOrder.php";
-  private deleteChangeLog = "http://localhost/xampp/DeleteChangeLog.php";
+  private deleteChangeOrder = "backend/DeleteChangeOrder.php";
+  private deleteChangeLog = "backend/DeleteChangeLog.php";
 
   constructor(private http: HttpClient) { }
 

@@ -67,6 +67,7 @@ export default class ChangeLogDetailsComponent implements OnInit {
       jpayrollEmployee: ['', Validators.required],
       userId: ['', Validators.required],
       files: [null],
+      Verified: [false]
     });
   }
 
@@ -144,6 +145,8 @@ export default class ChangeLogDetailsComponent implements OnInit {
   }
 
   onSubmit() {
+    const verifiedValue = this.ChangeLog.get('Verified')?.value ? 1 : 0;
+
     if (this.files.length > 0) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
@@ -155,8 +158,10 @@ export default class ChangeLogDetailsComponent implements OnInit {
             comment: this.ChangeLog.get('comment')?.value,
             userId: this.ChangeLog.get('userId')?.value,
             fileId: response.fileId,
-            changeLogId : this.changeLogId
+            changeLogId : this.changeLogId,
+            verified: verifiedValue
           };
+          console.log(payload)
           this.userService.UpdateChangeLog(payload).subscribe(
             (res) => {
               alert('Update has been submitted');
@@ -180,8 +185,10 @@ export default class ChangeLogDetailsComponent implements OnInit {
         comment: this.ChangeLog.get('comment')?.value,
         userId: this.ChangeLog.get('userId')?.value,
         fileId: this.fileId,
-        changeLogId : this.changeLogId
+        changeLogId : this.changeLogId,
+        verified: verifiedValue
       };
+      console.log(payload)
       this.userService.UpdateChangeLog(payload).subscribe(
         (res) => {
           alert('Update has been submitted');
