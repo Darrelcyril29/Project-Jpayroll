@@ -27,7 +27,8 @@ $sql = "SELECT
             cl.Comment,
             fp.FilePath,
             cl.UploadDate,
-            u.Name AS UserName
+            u.Name AS UserName,
+            cl.Verified
         FROM 
             t_change_log cl
         JOIN 

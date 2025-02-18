@@ -15,6 +15,7 @@ import { ClassicEditor,
 } from 'ckeditor5';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -82,7 +83,8 @@ export default class ChangeOrderDetailsComponent implements OnInit {
     private userService: UserService,
     private excelService: ExcelService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.changeRequestForm = this.fb.group({
       clientId:[''],
@@ -264,6 +266,10 @@ export default class ChangeOrderDetailsComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+  
+  sanitizeHtml(field: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(this.changeRequestForm.get(field)?.value || '');
   }
   
   
