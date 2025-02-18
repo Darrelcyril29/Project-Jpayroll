@@ -55,14 +55,18 @@
     </div>
 
     <!-- Change Details -->
-    <div class="mb-3">
+    <div class="mb-3" *ngIf="isReadonly == true">
+      <label class="form-label">Change Details</label>
+      <div [innerHTML]="sanitizeHtml('changeDetails')" class="comment-text"></div>  
+    </div>
+
+    <div class="mb-3" *ngIf="isReadonly != true">
       <label for="changeDetails" class="form-label">Change Details</label>
       <div class="ckeditor-wrapper">
       <ckeditor 
       [editor]="Editor" 
       formControlName="changeDetails" 
       [config]="config">
-      
       </ckeditor>
       </div>
     </div>
@@ -100,7 +104,12 @@
     </div>
 
     <!-- Comment -->
-    <div class="mb-3">
+    <div class="mb-3" *ngIf="isReadonly == true">
+      <label class="form-label">Comment</label>
+      <div [innerHTML]="sanitizeHtml('comment')" class="comment-text"></div>  
+    </div>
+
+    <div class="mb-3" *ngIf="isReadonly != true">
       <label for="comment" class="form-label">Comment</label>
       <div class="ckeditor-wrapper">
       <ckeditor 
